@@ -1,0 +1,51 @@
+<head>
+    <link type="text/css" href="{{ url_for('static', filename='css/styles.css') }}" rel="stylesheet"/>
+    <link rel="canonical" href="{{ url_for('user.profile') }}">
+    <meta name="description" content="It's profile page">
+    <title>Profile page</title>
+</head>
+{% extends 'base.html' %}
+{% block content %}
+    {{ super() }}
+    {% for cat, msg in get_flashed_messages(True) %}
+        <div class="flash {{ cat }}">{{ msg }}</div>
+    {% endfor %}
+    <style>
+        body {
+            background-image: none;
+            background-color: lightgray;
+        }
+    </style>
+    <table class="profile_table">
+        <tr>
+            <td valign="top" style="border:none;">
+                <div class="profile-ava"><img src="{{ url_for('user.avatar') }}"></div>
+                <div class="profile-load">
+                    <form action="{{ url_for('user.upload') }}" method="POST" enctype="multipart/form-data">
+                        <p><input type="file" name="file">
+                        <p><input type="submit" value="Upload">
+                    </form>
+                </div>
+            </td>
+            <td valign="top" class="profile-panel" style="border:none;">
+                <p><a href="{{ url_for('user.logout') }}">Logout</a>
+                <ul class="profile-info">
+                    <li>Your name: {{ admin_profile.full_name }}</li>
+                </ul>
+                </br>
+                </br>
+                </br>
+                </br>
+                <div>
+                    <a href="{{ url_for('user.get_department_of_hospital') }}">Change or add
+                        department</a>
+                </div>
+                </br>
+                <div>
+                    <a href="{{ url_for('user.get_employees') }}">Change or add
+                        employees</a>
+                </div>
+            </td>
+        </tr>
+    </table>
+{% endblock %}

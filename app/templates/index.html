@@ -1,0 +1,13 @@
+<head>
+    <link rel="canonical" href="{{ url_for('user.home_page') }}">
+    <meta name="description" content="It's start hospital page">
+    <title>Hospital</title>
+</head>
+{% extends 'base.html' %}
+
+{% block content %}
+    {{ super() }}
+    {% for cat, msg in get_flashed_messages(True) %}
+        <div class="flash {{ cat }}">{{ msg }}</div>
+    {% endfor %}
+{% endblock %}

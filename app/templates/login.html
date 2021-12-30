@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link type="text/css" href="{{ url_for('static', filename='css/styles.css') }}" rel="stylesheet"/>
+    <link rel="canonical" href="{{ url_for('user.login') }}">
+    <meta name="description" content="It's admin page">
+    <title>Admin page</title>
+</head>
+{% extends 'base.html' %}
+{% block content %}
+    {{ super() }}
+    <style>
+        body {
+            background-image: none
+        }
+    </style>
+    {% for cat, msg in get_flashed_messages(True) %}
+        <div class="flash {{ cat }}">{{ msg }}</div>
+    {% endfor %}
+    <div id="login" class="wnd_dlg_back login_wnd">
+        <div class="login">
+            <form action="" method="post" class="form-contact">
+                {{ form.hidden_tag() }}
+                {% for field in form if field.name not in ['csrf_token', 'remember', 'submit'] -%}
+                    <p>{{ field.label() }}
+                    {% if field.errors %}
+                        {{ field(class="invalid") }}
+                        <span class="invalid-feedback">
+		{% for e in field.errors %}
+            {{ e }}
+        {% endfor %}
+	</span>
+                    {% else %}
+                        {{ field() }}
+                    {% endif %}
+                {% endfor %}
+                <p>{{ form.submit() }}
+            </form>
+        </div>
+    </div>
+    </html>
+{% endblock %}

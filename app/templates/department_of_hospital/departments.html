@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="canonical" href="{{ url_for('user.get_department_of_hospital') }}">
+    <meta name="description" content="It's all departments hospital">
+    <title>Departments of hospital</title>
+</head>
+{% extends 'base.html' %}
+{% block content %}
+    {{ super() }}
+    {% for cat, msg in get_flashed_messages(True) %}
+        <div class="flash {{ cat }}">{{ msg }}</div>
+    {% endfor %}
+    <style>
+        body {
+            background-image: none
+        }
+    </style>
+    <h1>Departments of hospital</h1>
+    <table id="table">
+        <thead>
+        <tr>
+            {% if current_user.is_authenticated %}
+                <th>Name</th>
+                <th>What's doing</th>
+                <th>Employees</th>
+                <th>Salary</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            {% else %}
+                <th>Name</th>
+                <th>What's doing</th>
+                <th>Employees</th>
+                <th>Salary</th>
+            {% endif %}
+        </tr>
+        </thead>
+    </table>
+    <h1 class="text-center margin-top"><small id="empty"></small></h1>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.12.15/dist/sweetalert2.all.min.js"></script>
+
+    {% if current_user.is_authenticated %}
+        <div style="text-align: center">
+            <a href="{{ url_for('user.add_department_of_hospital') }}" class="button_add" role="button">Add
+                department</a>
+        </div>
+    {% endif %}
+    <p id="session" hidden>{{ current_user.is_authenticated  }}</p>
+    <script type="text/javascript"
+            src="{{ url_for('static', filename='js/departments_of_hospital/departments.js') }}"></script>
+{% endblock %}

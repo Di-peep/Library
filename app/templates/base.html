@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link type="text/css" href="{{ url_for('static', filename='css/styles.css') }}" rel="stylesheet"/>
+</head>
+<body>
+{% block content -%}
+    {%- block mainmenu -%}
+        <ul class="mainmenu">
+            <li>HOSPITAL APP</li>
+            <li><a href="{{ url_for('user.home_page') }}">Home page</a></li>
+            <li><a href="{{ url_for('user.get_department_of_hospital') }}">Hospital</a></li>
+            <li><a href="{{ url_for('user.get_employees') }}">Employees</a></li>
+            {% if current_user.is_authenticated %}
+                <li class="last"><a href="{{ url_for('user.profile') }}">Profile</a></li>
+                <li class="last"><a href="{{ url_for('user.logout') }}">Logout</a></li>
+            {% else %}
+                <li class="last"><a href="{{ url_for('user.login') }}">Login</a></li>
+            {% endif %}
+        </ul>
+    {% endblock mainmenu -%}
+    <style>
+        body {
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;
+            background-image: url("{{ url_for('static', filename='images/hospital.jpg') }}");
+        }
+    </style>
+{% endblock %}
+<div class="footer">
+    <ul class="mainmenu">
+        <li>
+            <button class="first">Get more information</button>
+            <script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.12.15/dist/sweetalert2.all.min.js"></script>
+            <script>
+                document.querySelector(".first").addEventListener('click', function () {
+                    swal("This is simple web application.\nYou can check and search for departments of hospital and employees." +
+                        "\nIf you are admin you can delete, add and change information.");
+                });
+            </script>
+        </li>
+        <li class="last" style="color:black"> 2021 - All Right Reserved.</li>
+    </ul>
+</div>
+</body>
+</html>
+
+

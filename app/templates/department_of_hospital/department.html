@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="It's all departments hospital">
+</head>
+
+<body>
+{% extends 'base.html' %}
+{% block content %}
+    {{ super() }}
+    {% for cat, msg in get_flashed_messages(True) %}
+        <div class="flash {{ cat }}">{{ msg }}</div>
+    {% endfor %}
+    <style>
+        body {
+            background-image: none
+        }
+    </style>
+    {% if flag %}
+        <h1 class="text-center margin-top">Add department</h1>
+        <title>Add department</title>
+        <link rel="canonical" href="{{ url_for('user.add_department_of_hospital') }}">
+        <meta name="description" content="Add a  department of hospital">
+    {% else %}
+        <h1 class="text-center margin-top">Edit department</h1>
+        <title>Edit department</title>
+    {% endif %}
+    <div class="hospital">
+        <form action="" class="form-contact">
+            <label for="Name of department">Name of department</label>
+            <input type="text" id="Name of department" placeholder="type here">
+
+            <label for="to_do">What's department doing</label>
+            <input type="text" id="to_do" placeholder="type here">
+        </form>
+    </div>
+    <script src="{{ url_for('static', filename='js/departments_of_hospital/department.js') }}"></script>
+    <div class="agree" style="text-align: center;">
+        <a href="#" role="button" onclick="checker_where_are_you()">Submit</a>
+    </div>
+{% endblock %}
+</body>
+</html>

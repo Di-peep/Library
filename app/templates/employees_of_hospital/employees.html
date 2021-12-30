@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="canonical" href="{{ url_for('user.get_department_of_hospital') }}">
+    <meta name="description" content="It's all employees of hospital">
+    <title>Employees of hospital</title>
+</head>
+{% extends 'base.html' %}
+{% block content %}
+    {{ super() }}
+    {% for cat, msg in get_flashed_messages(True) %}
+        <div class="flash {{ cat }}">{{ msg }}</div>
+    {% endfor %}
+    <style>
+        body {
+            background-image: none
+        }
+    </style>
+    <h1>Employees of hospital</h1>
+    <div class="wrapper">
+        <div class="left">
+            <button class="forButton" onclick='ShowHidden("BornOn")'>Search born on date</button>
+            <div id="BornOn" style="display:none">
+                <div class="date">
+                    <label for="date">Enter date:</label>
+                    <label for="curdate"></label>
+                    <input type="text" id="curdate" placeholder="mm/dd/yyyy">
+                </div>
+                <div>
+                    <button type="submit" value="ok" onclick="get_employee_born_on_date()">Search
+                    </button>
+                </div>
+                <a href="{{ url_for('user.get_employees') }}">
+                    <button>Back</button>
+                </a>
+            </div>
+        </div>
+        <div class="right">
+            <button class="forButton" onclick='ShowHidden("BornBeetween")'>Search beetween dates
+            </button>
+            <div id="BornBeetween" style="display:none">
+                <div class="date">
+                    <label for="date">Start date:</label>
+                    <label for="start_date"></label>
+                    <input type="text" id="start_date" placeholder="mm/dd/yyyy">
+                </div>
+                <div class="date">
+                    <label for="date">Finish date:</label>
+                    <label for="finish_date"></label>
+                    <input type="text" id="finish_date" placeholder="mm/dd/yyyy">
+                </div>
+                <div>
+                    <button type="submit" value="ok" onclick="get_employees_born_beetween_dates()">Search
+                    </button>
+                </div>
+                <a href="{{ url_for('user.get_employees') }}">
+                    <button>Back</button>
+                </a>
+            </div>
+        </div>
+    </div>
+    <table id="table">
+        <thead>
+        <tr>
+            {% if current_user.is_authenticated %}
+                <th>Full name</th>
+                <th>Date of birth</th>
+                <th>Salary</th>
+                <th>Department of hospital</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            {% else %}
+                <th>Full name</th>
+                <th>Date of birth</th>
+                <th>Salary</th>
+                <th>Department of hospital</th>
+            {% endif %}
+        </tr>
+        </thead>
+    </table>
+    <h1 class="text-center margin-top"><small id="empty"></small></h1>
+
+    {% if current_user.is_authenticated %}
+        <div style="text-align: center">
+            <a href="{{ url_for('user.add_employee') }}" class="button_add" role="button">Add
+                employee</a>
+        </div>
+    {% endif %}
+
+    <p id="session" hidden>{{ current_user.is_authenticated }}</p>
+    <script type="text/javascript"
+            src="{{ url_for('static', filename='js/employees_of_hospital/employees.js') }}"></script>
+    <script>
+        function ShowHidden(tales) {
+            let element = document.getElementById(tales);
+            if (element.style.display === 'none') {
+                element.style.display = 'block';
+            } else {
+                element.style.display = 'none';
+            }
+        }
+    </script>
+{% endblock %}
+</html>

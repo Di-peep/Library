@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="It's all employees of hospital">
+</head>
+
+<body>
+{% extends 'base.html' %}
+{% block content %}
+    {{ super() }}
+    {% for cat, msg in get_flashed_messages(True) %}
+        <div class="flash {{ cat }}">{{ msg }}</div>
+    {% endfor %}
+    <style>
+        body {
+            background-image: none
+        }
+    </style>
+    {% if flag %}
+        <h1 class="text-center margin-top">Add employee</h1>
+        <title>Add employee</title>
+        <link rel="canonical" href="{{ url_for('user.add_employee') }}">
+        <meta name="description" content="Add an employee of hospital">
+    {% else %}
+        <h1 class="text-center margin-top">Edit employee</h1>
+        <title>Edit employee</title>
+    {% endif %}
+    <div class="hospital">
+        <form action="" class="form-contact">
+            <label for="Name">Name</label>
+            <input type="text" id="Name" placeholder="type here">
+                <label for="date">Date of birth:</label>
+                <label for="curdate"></label>
+                <input type="text" id="curdate" placeholder="mm/dd/yyyy">
+            <label for="to_do">Salary</label>
+            <input type="text" id="salary" placeholder="type here">
+        </form>
+        <div class="form-group">
+            <label for="department">Select the department</label>
+            <select class="form-control" id="department" name="department">
+            </select>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='js/employees_of_hospital/employee.js') }}"></script>
+    <div class="agree" style="text-align: center;">
+        <a href="#" role="button" onclick="checker_where_are_you()">Submit</a>
+    </div>
+{% endblock %}
+</body>
+</html>

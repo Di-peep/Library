@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    {{ super() }}
+    <style>
+        body {
+            background-image: none
+        }
+    </style>
+    <p class="page_not_found">You are unauthorized. Please, authorize using page <a
+            href="{{ url_for('user.login') }}">Login</a>
+{% endblock %}
